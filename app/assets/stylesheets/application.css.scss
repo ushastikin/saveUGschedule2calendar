@@ -13,3 +13,27 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  padding-top: 60px; // this padding caused by bootstrap .navbar-fixed-top
+}
+
+.container {
+  @include make-row();
+  @include make-xs-column(12);
+  @include make-sm-column-offset(1);
+  @include make-sm-column(10);
+  @include make-md-column-offset(2);
+  @include make-md-column(8);
+  margin: 0 5px 0 5px;
+}
+main {
+  margin: 5px 0 5px 0;
+}
+
+footer {
+  clear: both;
+}

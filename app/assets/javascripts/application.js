@@ -14,3 +14,17 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//
+// Load needed Bootstrap JavaScripts
+//= require bootstrap/tooltip
+//= require bootstrap/popover
+
+$(document).ready(
+    function() {
+        $('.preview-popover').popover({
+            html: true,
+            trigger: "hover",
+            placement: "bottom"
+        });
+    }
+);

@@ -1,0 +1,41 @@
+<p>
+  Please, <b>enter here the
+  <%= link_to('link', '#', class: 'preview-popover',
+              'data-content' => "#{image_tag('preview_copy_link.png')}") %>
+  to you UG schedule</b>:
+</p>
+<%= form_tag('/', :method => 'get') do %>
+    <%= text_field_tag(:link, @link, class: 'form-control') %>
+    <br>
+    <%= submit_tag('Generate CSV content for your exams',
+                   :class => 'btn btn-primary') %>
+<% end %>
+
+<br>
+
+<p>Generated CSV content:</p>
+<%= form_tag('/save_csv', :method => 'get') do %>
+    <!--<%= label_tag(:csv_content, 'Generated CSV content:') %>-->
+    <% lines_in_csv_content = @csv_content.nil? ? 2 : @csv_content.count("\n")+1; %>
+    <%= text_area_tag(:csv_content, @csv_content,
+                      :size => "0x#{lines_in_csv_content}",
+                      class: 'form-control')
+    %>
+    <br>
+    <%= submit_tag('Save the content to the CSV file',
+                   :class => 'btn btn-primary') %>
+<% end %>
+
+<br>
+
+<a href="https://support.google.com/calendar/answer/37118?hl=en">
+  How to import events from CSV file to Google Calendar
+</a>
+<br>
+<a href="http://office.microsoft.com/en-001/outlook-help/import-contacts-from-an-excel-spreadsheet-HA102919779.aspx">
+  How to import events from CSV file to Microsoft Outlook
+</a>
+<br>
+<a href="https://www.google.com/search?q=how+to+import+csv+file+to&btnG=Search&oe=utf-8&rls=org.mozilla%3Aen-US%3Aofficial&client=firefox-a&channel=fflb&gfe_rd=cr">
+  Search with google 'how to import CSV file to'
+</a>

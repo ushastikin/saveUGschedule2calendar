@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- improves the presentation of web pages on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>SaveUGschedule2calendar</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+  <%= stylesheet_link_tag    'application', media: 'all',
+                             'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
+<div class="container">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to 'saveUGschedule2calendar', root_path, class: 'navbar-brand' %>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-<%= yield %>
+  <main role="main">
+    <%= yield %>
+  </main>
 
+  <footer>
+    <hr>
+    This project is an open source and you are welcome to contribute
+    <a href="https://github.com/ushastikin/saveUGschedule2calendar">here</a>.
+  </footer>
+</div>
 </body>
 </html>
