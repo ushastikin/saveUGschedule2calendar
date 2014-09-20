@@ -28,6 +28,8 @@ body {
   @include make-sm-column(10);
   @include make-md-column-offset(2);
   @include make-md-column(8);
+  @include make-lg-column-offset(3);
+  @include make-lg-column(6);
   margin: 0 5px 0 5px;
 }
 main {

@@ -26,7 +26,7 @@ class StaticPagesController < ApplicationController
 
   private
   def get_csv(link)
-    return 'Please, enter some link' if link.nil? || link.empty?
+    return 'Please, enter some link above' if link.nil? || link.empty?
     # csv format
     #Subject,Start Date,Start Time,End Date,End Time,Location
     csv_exams = 'Subject,Start Date,Start Time,End Date,End Time,Location'
