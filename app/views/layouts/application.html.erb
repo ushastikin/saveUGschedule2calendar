@@ -4,7 +4,9 @@
   <!-- improves the presentation of web pages on mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SaveUGschedule2calendar</title>
+  <!--<% app_name = Rails.application.class.parent %>-->
+  <% app_name = 'saveUGschedule2calendar' %>
+  <title><%= app_name %></title>
 
   <%= stylesheet_link_tag    'application', media: 'all',
                              'data-turbolinks-track' => true %>
@@ -18,7 +20,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <%= link_to 'saveUGschedule2calendar', root_path, class: 'navbar-brand' %>
+          <%= link_to app_name, root_path, class: 'navbar-brand' %>
         </div>
       </div>
     </nav>
@@ -31,7 +33,10 @@
   <footer>
     <hr>
     This project is an open source and you are welcome to contribute
-    <a href="https://github.com/ushastikin/saveUGschedule2calendar">here</a>.
+    <a href="https://github.com/ushastikin/<%= app_name %>">here</a>
+    <br>
+    You can also contact the developer via
+    <a href="mailto:<%= app_name %>@gmail.com"><%= app_name %>@gmail.com</a>
   </footer>
 </div>
 </body>

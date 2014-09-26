@@ -2,7 +2,7 @@
   Please, <b>enter here the
   <%= link_to('link', '#', class: 'preview-popover',
               'data-content' => "#{image_tag('preview_copy_link.png')}") %>
-  to you UG schedule</b>:
+  to your UG schedule</b>:
 </p>
 <%= form_tag('/', :method => 'get') do %>
     <%= text_field_tag(:link, @link, class: 'form-control') %>

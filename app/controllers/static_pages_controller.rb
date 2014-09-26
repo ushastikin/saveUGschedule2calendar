@@ -71,6 +71,7 @@ class StaticPagesController < ApplicationController
     end
 
     csv_exams
+    # for debug
     #puts csv_exams
     #file = File.new("exams.csv", "w:utf-8")
     #file.puts csv_exams
