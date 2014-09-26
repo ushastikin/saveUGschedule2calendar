@@ -18,7 +18,8 @@
     <!--<%= label_tag(:csv_content, 'Generated CSV content:') %>-->
     <% lines_in_csv_content = @csv_content.nil? ? 2 : @csv_content.count("\n")+1; %>
     <%= text_area_tag(:csv_content, @csv_content,
-                      :size => "0x#{lines_in_csv_content}",
+                      # 1x is for passing http://validator.w3.org
+                      :size => "1x#{lines_in_csv_content}",
                       class: 'form-control')
     %>
     <br>
@@ -36,6 +37,6 @@
   How to import events from CSV file to Microsoft Outlook
 </a>
 <br>
-<a href="https://www.google.com/search?q=how+to+import+csv+file+to&btnG=Search&oe=utf-8&rls=org.mozilla%3Aen-US%3Aofficial&client=firefox-a&channel=fflb&gfe_rd=cr">
+<a href="https://www.google.com/search?q=how+to+import+csv+file+to">
   Search with google 'how to import CSV file to'
 </a>
