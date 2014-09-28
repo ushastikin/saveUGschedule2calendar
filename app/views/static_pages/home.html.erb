@@ -7,8 +7,12 @@
 <%= form_tag('/', :method => 'get') do %>
     <%= text_field_tag(:link, @link, class: 'form-control') %>
     <br>
-    <%= submit_tag('Generate CSV content for your exams',
-                   :class => 'btn btn-primary') %>
+    <%= submit_tag('Generate CSV content for schedule',
+                   :class => 'btn btn-primary',
+                   data: {disable_with: 'Generating content. Please wait......'}) %>
+    <%= submit_tag('Generate CSV content for exams',
+                   :class => 'btn btn-primary',
+                   data: {disable_with: 'Generating content. Please wait..'}) %>
 <% end %>
 
 <br>
