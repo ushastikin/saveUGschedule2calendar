@@ -5,23 +5,26 @@
   to your UG schedule</b>:
 </p>
 <%= form_tag('/', :method => 'get') do %>
-    <%= text_field_tag(:link, @link, class: 'form-control') %>
+    <%= text_field_tag(:link, @link, class: 'form-control',
+                       :placeholder =>
+                               'http://ug3.technion.ac.il/rishum/weekplan.php?RGS=...') %>
     <br>
-    <%= submit_tag('Generate CSV content for schedule',
+    <%= submit_tag('Generate file content for schedule',
                    :class => 'btn btn-primary',
-                   data: {disable_with: 'Generating content. Please wait......'}) %>
-    <%= submit_tag('Generate CSV content for exams',
+                   data: {disable_with: 'Generating content. Please wait...'}) %>
+    <%= submit_tag('Generate file content for exams',
                    :class => 'btn btn-primary',
-                   data: {disable_with: 'Generating content. Please wait..'}) %>
+                   data: {disable_with: 'Generating content. Please wait'}) %>
 <% end %>
 
 <br>
 
-<p>Generated CSV content:</p>
 <%= form_tag('/save_csv', :method => 'get') do %>
-    <!--<%= label_tag(:csv_content, 'Generated CSV content:') %>-->
+    <!--<%= label_tag(:csv_content, 'Generated content:') %>-->
     <% lines_in_csv_content = @csv_content.nil? ? 2 : @csv_content.count("\n")+1; %>
     <%= text_area_tag(:csv_content, @csv_content,
+                      :placeholder =>
+                              'Here you will get a content in CSV format, so (if you need) you can edit it manually before saving it to file',
                       # 1x is for passing http://validator.w3.org
                       :size => "1x#{lines_in_csv_content}",
                       class: 'form-control')
@@ -32,6 +35,12 @@
 <% end %>
 
 <br>
+
+<p>
+  What's next?<br>
+  Import the created file to your calendar (use links below to learn how) and
+  enjoy it!
+</p>
 
 <a href="https://support.google.com/calendar/answer/37118?hl=en">
   How to import events from CSV file to Google Calendar

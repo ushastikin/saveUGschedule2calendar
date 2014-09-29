@@ -19,12 +19,15 @@
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 
-$(document).ready(
-    function() {
-        $('.preview-popover').popover({
-            html: true,
-            trigger: "hover",
-            placement: "bottom"
-        });
-    }
-);
+var ready_fun = function() {
+    $('.preview-popover').popover({
+        html: true,
+        trigger: "hover",
+        placement: "bottom"
+    });
+};
+
+/// Following lines solves the problem with loading jQuery scripts after link_to.
+/// The problem is caused by Turbolinks gem.
+$(document).ready(ready_fun);
+$(document).on('page:load', ready_fun);
