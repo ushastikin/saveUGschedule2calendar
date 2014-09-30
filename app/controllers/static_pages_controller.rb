@@ -135,17 +135,19 @@ class StaticPagesController < ApplicationController
       # semester_code = link.split('/')[-1].split('=')[-1]
       link_to_exam_details = "http://ug3.technion.ac.il/rishum/exams/#{course_number}/#{semester_code}"
       exam_doc = Nokogiri::HTML(open(link_to_exam_details), nil, 'utf-8')
-      time = exam_doc.xpath('//div[@class="property-value"]')[1].content
-      start_time_a = time.split('-')[0]
-      end_time_a = time.split('-')[1]
-      time = exam_doc.xpath('//div[@class="property-value"]')[5].content
-      start_time_b = time.split('-')[0]
-      end_time_b = time.split('-')[1]
-      location_a = exam_doc.css('div.property-value')[3].inner_html.gsub!(/<br>/, ' ')
-      location_b = exam_doc.css('div.property-value')[7].inner_html.gsub!(/<br>/, ' ')
+      if exam_doc.xpath('//div[@class="property-value"]').size >= 6
+        time = exam_doc.xpath('//div[@class="property-value"]')[1].content
+        start_time_a = time.split('-')[0]
+        end_time_a = time.split('-')[1]
+        time = exam_doc.xpath('//div[@class="property-value"]')[5].content
+        start_time_b = time.split('-')[0]
+        end_time_b = time.split('-')[1]
+        location_a = exam_doc.css('div.property-value')[3].inner_html.gsub!(/<br>/, ' ')
+        location_b = exam_doc.css('div.property-value')[7].inner_html.gsub!(/<br>/, ' ')
 
-      csv_exams << "\n#{subject_a},#{date_exam_a},#{start_time_a}:00,#{date_exam_a},#{end_time_a}:00,#{location_a}" unless date_exam_a.empty?
-      csv_exams << "\n#{subject_b},#{date_exam_b},#{start_time_b}:00,#{date_exam_b},#{end_time_b}:00,#{location_b}" unless date_exam_b.empty?
+        csv_exams << "\n#{subject_a},#{date_exam_a},#{start_time_a}:00,#{date_exam_a},#{end_time_a}:00,#{location_a}" unless date_exam_a.empty?
+        csv_exams << "\n#{subject_b},#{date_exam_b},#{start_time_b}:00,#{date_exam_b},#{end_time_b}:00,#{location_b}" unless date_exam_b.empty?
+      end
     end
 
     csv_exams

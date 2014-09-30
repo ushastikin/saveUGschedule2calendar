@@ -19,9 +19,10 @@
 
 <br>
 
-<%= form_tag('/save_csv', :method => 'get') do %>
+<%= form_tag('/save_csv', :method => 'post') do %>
     <!--<%= label_tag(:csv_content, 'Generated content:') %>-->
-    <% lines_in_csv_content = @csv_content.nil? ? 2 : @csv_content.count("\n")+1; %>
+    <% lines_in_csv_content =
+               @csv_content.nil? ? 2 : [10,@csv_content.count("\n")].min; %>
     <%= text_area_tag(:csv_content, @csv_content,
                       :placeholder =>
                               'Here you will get a content in CSV format, so (if you need) you can edit it manually before saving it to file',
