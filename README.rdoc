@@ -1,3 +1,5 @@
+{<img src="https://travis-ci.org/ushastikin/saveUGschedule2calendar.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/ushastikin/saveUGschedule2calendar]
+
 == Overview
 
 This project comes to help students importing UG schedule to their calendars.
