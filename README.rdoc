@@ -1,6 +1,7 @@
 {<img src="https://travis-ci.org/ushastikin/saveUGschedule2calendar.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/ushastikin/saveUGschedule2calendar]
 {<img src="https://codeclimate.com/github/ushastikin/saveUGschedule2calendar/badges/gpa.svg" />}[https://codeclimate.com/github/ushastikin/saveUGschedule2calendar]
 {<img src="https://codeclimate.com/github/ushastikin/saveUGschedule2calendar/badges/coverage.svg" />}[https://codeclimate.com/github/ushastikin/saveUGschedule2calendar/coverage]
+{<img src="https://gemnasium.com/ushastikin/saveUGschedule2calendar.svg" alt="Dependency Status" />}[https://gemnasium.com/ushastikin/saveUGschedule2calendar]
 
 == Overview
 
