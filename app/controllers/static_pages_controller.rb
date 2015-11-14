@@ -75,15 +75,15 @@ class StaticPagesController < ApplicationController
           # TODO: replace by some generic method according to http://www.admin.technion.ac.il/dpcalendar/
           semester_start_dates = {
               201302 => '2014-10-06', # for test
-              201303 => '2014-08-14',
-              201401 => '2014-10-20',
-              201402 => '2015-03-17',
+              201501 => '18/10/2015',
+              201502 => '13/03/2016',
+              201503 => '24/07/2016'
           }
           semester_end_dates = {
               201302 => '2014-10-15', # for test
-              201303 => '2014-09-14',
-              201401 => '2015-01-22',
-              201402 => '2015-06-28',
+              201501 => '21/01/2016',
+              201502 => '23/06/2016',
+              201503 => '08/09/2016'
           }
           semester_start_date = Date.parse(semester_start_dates[semester_code.to_i])
           semester_end_date = Date.parse(semester_end_dates[semester_code.to_i])
