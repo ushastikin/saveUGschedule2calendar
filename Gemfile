@@ -43,7 +43,9 @@ gem 'bootstrap-sass', '3.2.0'
 # Add Nokogiri gem to parse HTML
 gem 'nokogiri', '1.5.6'
 # Replace defaults server (don't remember which one is used) with thin
+gem 'eventmachine', '1.0.6' # for travis-ci.org
 gem 'thin', '1.5.1'
+#
 group :production do
   # Add PostgreSQL gem
   gem 'pg'
