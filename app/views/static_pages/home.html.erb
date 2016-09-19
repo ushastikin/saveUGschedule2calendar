@@ -3,6 +3,7 @@
   <%= link_to('link', '#', class: 'preview-popover',
               'data-content' => "#{image_tag('preview_copy_link.png')}") %>
   to your UG schedule</b>:
+  <br>(for example: http://ug3.technion.ac.il/rishum/weekplan.php?RGS=23634314&SEM=201502)
 </p>
 <%= form_tag('/', :method => 'get') do %>
     <%= text_field_tag(:link, @link, class: 'form-control',
