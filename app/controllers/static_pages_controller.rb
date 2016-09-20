@@ -12,32 +12,36 @@ class StaticPagesController < ApplicationController
     # define content type in the session cache for CSV file name
     Rails.cache.write('csv_content_type', 'empty')
 
-    unless @link.nil? || @link.empty?
-      link_regexp = /https?:\/\/ug3\.technion\.ac\.il\/rishum\/weekplan\.php\?RGS=([0-9]{8})*&SEM=[0-9]{6}/
-      if @link =~ link_regexp
-        # parse link to get courses/groups numbers and semester number
-        tmp = @link.split('RGS=')[-1]
-        courses_string = tmp.split('&SEM=')[0]
-        course_group = {}
-        courses_string.chars.each_slice(8) do |course_string|
-          course_group[course_string[0..5].join] = course_string[6,7].join
-        end
-        semester_code = tmp.split('&SEM=')[-1]
-
-        # csv format
-        #Subject,Start Date,Start Time,End Date,End Time,Location
-        csv_exams = 'Subject,Start Date,Start Time,End Date,End Time,Location'
-
-        if params[:commit] == 'Generate file content for exams'
-          @csv_content = get_exams_csv(@link, semester_code, csv_exams)
-          Rails.cache.write('csv_content_type', 'ug_exams_calendar')
-        else
-          raise unless params[:commit] == 'Generate file content for schedule'
-          @csv_content = get_schedule_csv(course_group, semester_code, csv_exams)
-          Rails.cache.write('csv_content_type', 'ug_schedule_calendar')
-        end
+    if params[:commit] == 'Generate file content for exams' ||
+        params[:commit] == 'Generate file content for schedule'
+      if @link.nil? || @link.empty?
+        @csv_content = 'Provided link is empty...'
       else
-        @csv_content = 'Please, check that your link is valid'
+        link_regexp = /https?:\/\/ug3\.technion\.ac\.il\/rishum\/weekplan\.php\?RGS=([0-9]{8})*&SEM=[0-9]{6}/
+        if @link =~ link_regexp
+          # parse link to get courses/groups numbers and semester number
+          tmp = @link.split('RGS=')[-1]
+          courses_string = tmp.split('&SEM=')[0]
+          course_group = {}
+          courses_string.chars.each_slice(8) do |course_string|
+            course_group[course_string[0..5].join] = course_string[6,7].join
+          end
+          semester_code = tmp.split('&SEM=')[-1]
+
+          # csv format
+          #Subject,Start Date,Start Time,End Date,End Time,Location
+          csv_exams = 'Subject,Start Date,Start Time,End Date,End Time,Location'
+
+          if params[:commit] == 'Generate file content for exams'
+            @csv_content = get_exams_csv(@link, semester_code, csv_exams)
+            Rails.cache.write('csv_content_type', 'ug_exams_calendar')
+          elsif params[:commit] == 'Generate file content for schedule'
+            @csv_content = get_schedule_csv(course_group, semester_code, csv_exams)
+            Rails.cache.write('csv_content_type', 'ug_schedule_calendar')
+          end
+        else
+          @csv_content = 'Please, check that your link is valid.'
+        end
       end
     end
   end
