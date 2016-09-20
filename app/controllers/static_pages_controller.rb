@@ -74,13 +74,13 @@ class StaticPagesController < ApplicationController
           rooms = line.search('td')[8].inner_html.split('<br>')
           # TODO: replace by some generic method according to http://www.admin.technion.ac.il/dpcalendar/
           semester_start_dates = {
-              201302 => '2014-10-06', # for test
+              201302 => '2014-10-06', # for manual (not automatic) test
               201501 => '18/10/2015',
               201502 => '13/03/2016',
               201503 => '24/07/2016'
           }
           semester_end_dates = {
-              201302 => '2014-10-15', # for test
+              201302 => '2014-10-15', # for manual (not automatic) test
               201501 => '21/01/2016',
               201502 => '23/06/2016',
               201503 => '08/09/2016'
@@ -110,7 +110,7 @@ class StaticPagesController < ApplicationController
 
   def get_exams_csv(link, semester_code, csv_exams)
     begin
-      # new page example
+      # for manual (not automatic) test
       #link = 'http://ug3.technion.ac.il/rishum/weekplan.php?RGS=234247212363431123635311&SEM=201302'
       doc = Nokogiri::HTML(open(link), nil, 'utf-8')
     rescue
@@ -125,28 +125,24 @@ class StaticPagesController < ApplicationController
 
       # get exams subject
       subject = row_columns[1].content
-      subject_a = "#{subject} מועד א"
-      subject_b = "#{subject} מועד ב"
+      subject_arr = ["#{subject} מועד א", "#{subject} מועד ב"]
       # get exams dates
-      date_exam_a = row_columns[-2].content
-      date_exam_b = row_columns[-1].content
+      date_exam_arr = [row_columns[-2].content, row_columns[-1].content]
       # get exams time and location
       course_number = row_columns[0].content.split('-')[0]
       # semester_code = link.split('/')[-1].split('=')[-1]
       link_to_exam_details = "http://ug3.technion.ac.il/rishum/exams/#{course_number}/#{semester_code}"
       exam_doc = Nokogiri::HTML(open(link_to_exam_details), nil, 'utf-8')
       if exam_doc.xpath('//div[@class="property-value"]').size >= 6
-        time = exam_doc.xpath('//div[@class="property-value"]')[1].content
-        start_time_a = time.split('-')[0]
-        end_time_a = time.split('-')[1]
-        time = exam_doc.xpath('//div[@class="property-value"]')[5].content
-        start_time_b = time.split('-')[0]
-        end_time_b = time.split('-')[1]
-        location_a = exam_doc.css('div.property-value')[3].inner_html.gsub!(/<br>/, ' ')
-        location_b = exam_doc.css('div.property-value')[7].inner_html.gsub!(/<br>/, ' ')
-
-        csv_exams << "\n#{subject_a},#{date_exam_a},#{start_time_a}:00,#{date_exam_a},#{end_time_a}:00,#{location_a}" unless date_exam_a.empty?
-        csv_exams << "\n#{subject_b},#{date_exam_b},#{start_time_b}:00,#{date_exam_b},#{end_time_b}:00,#{location_b}" unless date_exam_b.empty?
+        time_arr = [exam_doc.xpath('//div[@class="property-value"]')[1].content,
+                    exam_doc.xpath('//div[@class="property-value"]')[5].content]
+        start_time_arr = [time_arr[0].split('-')[0], time_arr[1].split('-')[0]]
+        end_time_arr = [time_arr[0].split('-')[1], time_arr[1].split('-')[1]]
+        location_arr = [exam_doc.css('div.property-value')[3].inner_html.gsub!(/<br>/, ' '),
+                        exam_doc.css('div.property-value')[7].inner_html.gsub!(/<br>/, ' ')]
+        (0..1).each do |i|
+          csv_exams << "\n#{subject_arr[i]},#{date_exam_arr[i]},#{start_time_arr[i]}:00,#{date_exam_arr[i]},#{end_time_arr[i]}:00,#{location_arr[i]}" unless date_exam_arr[i].empty?
+        end
       end
     end
 
