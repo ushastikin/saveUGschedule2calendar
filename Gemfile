@@ -48,7 +48,7 @@ gem 'thin', '1.5.1'
 #
 group :production do
   # Add PostgreSQL gem
-  gem 'pg'
+  gem 'pg', '0.18.4'
   # Add Heroku integration to rails 4
   gem 'rails_12factor', '0.0.2'
 end
