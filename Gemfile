@@ -52,3 +52,5 @@ group :production do
   # Add Heroku integration to rails 4
   gem 'rails_12factor', '0.0.2'
 end
+# for 'scout' heroku add-on
+gem 'scout_apm'
