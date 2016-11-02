@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 ruby '1.9.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -53,4 +53,4 @@ group :production do
   gem 'rails_12factor', '0.0.2'
 end
 # for 'scout' heroku add-on
-gem 'scout_apm'
+# gem 'scout_apm'
