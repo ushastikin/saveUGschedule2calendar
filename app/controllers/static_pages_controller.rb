@@ -30,13 +30,13 @@ class StaticPagesController < ApplicationController
 
           # csv format
           #Subject,Start Date,Start Time,End Date,End Time,Location
-          csv_exams = 'Subject,Start Date,Start Time,End Date,End Time,Location'
+          csv_template = 'Subject,Start Date,Start Time,End Date,End Time,Location'
 
           if params[:commit] == 'Generate file content for exams'
-            @csv_content = get_exams_csv(@link, semester_code, csv_exams)
+            @csv_content = get_exams_csv(@link, semester_code, csv_template)
             Rails.cache.write('csv_content_type', 'ug_exams_calendar')
           elsif params[:commit] == 'Generate file content for schedule'
-            @csv_content = get_schedule_csv(course_group, semester_code, csv_exams)
+            @csv_content = get_schedule_csv(course_group, semester_code, csv_template)
             Rails.cache.write('csv_content_type', 'ug_schedule_calendar')
           end
         else
@@ -63,7 +63,7 @@ class StaticPagesController < ApplicationController
 
   private
 
-  def get_schedule_csv(course_group, semester_code, csv_exams)
+  def get_schedule_csv(course_group, semester_code, csv_schedule)
     course_group.each_pair do |course_number, course_group_number|
       link_to_course_details = "http://ug3.technion.ac.il/rishum/course/#{course_number}/#{semester_code}"
       schedule_doc = Nokogiri::HTML(open(link_to_course_details), nil, 'utf-8')
@@ -81,16 +81,28 @@ class StaticPagesController < ApplicationController
               201302 => '2014-10-06', # for manual (not automatic) test
               201501 => '18/10/2015',
               201502 => '13/03/2016',
-              201503 => '24/07/2016'
+              201503 => '24/07/2016',
+              201601 => '25/10/2016',
+              201602 => '20/03/2017',
+              201603 => '02/08/2017'
           }
           semester_end_dates = {
               201302 => '2014-10-15', # for manual (not automatic) test
               201501 => '21/01/2016',
               201502 => '23/06/2016',
-              201503 => '08/09/2016'
+              201503 => '08/09/2016',
+              201601 => '26/01/2017',
+              201602 => '04/07/2017',
+              201603 => '18/09/2017'
           }
-          semester_start_date = Date.parse(semester_start_dates[semester_code.to_i])
-          semester_end_date = Date.parse(semester_end_dates[semester_code.to_i])
+
+          begin
+            semester_start_date = Date.parse(semester_start_dates[semester_code.to_i])
+            semester_end_date = Date.parse(semester_end_dates[semester_code.to_i])
+          rescue
+            return 'Sorry, but seems like the entered semester is still not supported, please ask the developer to fix the problem.'
+          end
+
           semester_start_date_sunday = semester_start_date - semester_start_date.wday.day
           # go through all weeks of the semester and save lessons data
           semester_start_date_sunday.step(semester_end_date, 7).each do |date_week_start|
@@ -101,7 +113,7 @@ class StaticPagesController < ApplicationController
               # add converted hebrew week day to start week date
               date = date_week_start + (week_days[index][0].ord - 'א'[0].ord).day
               if semester_start_date <= date && date <= semester_end_date
-                csv_exams << "\n#{course_name} #{lesson_type},#{date},#{start_time}0,#{date},#{end_time}0,#{location}"
+                csv_schedule << "\n#{course_name} #{lesson_type},#{date},#{start_time}0,#{date},#{end_time}0,#{location}"
               end
             end
           end
@@ -109,7 +121,7 @@ class StaticPagesController < ApplicationController
       end
     end
 
-    csv_exams
+    csv_schedule
   end
 
   def get_exams_csv(link, semester_code, csv_exams)
